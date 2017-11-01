@@ -8,6 +8,8 @@ const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
 
+//const todoService = new(require('./services/TodoService'))
+
 const router = express.Router()
 
 const todoItems = [
@@ -29,8 +31,15 @@ const todoItems = [
 
 ]
 
-app.get('/', (req, res) => {
-	res.render('index', { todoItems })
+app.get('/list-users', (req, res) => {
+   log.info(`Request from IP ${req.ip} to list users`)
+
+   const list = users.map(user => ({ id: user.id, username: user.username }))
+
+   res.json({
+        status: 'OK',
+        data: list
+    })
 })
 
 app.post('/', (req, res) => {
