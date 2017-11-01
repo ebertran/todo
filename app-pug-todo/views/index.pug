@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	form(action='/', method='POST')
+		input(type='text', name='todo')
+		input(type='submit', value='Submit')
+	h1 TODO	
+		ul
+			each item in todoItems
+				
+				unless item.done
+					li 
+						a(href='/change/' + item.id) #{item.name}
+	h1 DONE
+		ul
+			each item in todoItems
+				if item.done
+					li 
+						a(href='/delete/' + item.id) #{item.name}
