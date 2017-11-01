@@ -12,29 +12,10 @@ app.use(bodyParser.json())
 
 const router = express.Router()
 
-const todoItems = [
-	{
-	"id": "328197432871",
-	"name": "victor",
-	"done": "false"
-	},
-	{
-	"id": "328197432871",
-	"name": "rajoy is a beast",
-	"done": "false"
-	},
-	{
-	"id": "328197432871",
-	"name": "hablar de cosas",
-	"done": "false"
-	}
+const todoItems = []
 
-]
-
-app.get('/list-users', (req, res) => {
-   log.info(`Request from IP ${req.ip} to list users`)
-
-   const list = users.map(user => ({ id: user.id, username: user.username }))
+app.get('/list-todos', (req, res) => {
+   const list = todoItems.map(item => ({ id: item.id, name: item.name, done: item.done }))
 
    res.json({
         status: 'OK',
@@ -42,19 +23,29 @@ app.get('/list-users', (req, res) => {
     })
 })
 
-app.post('/', (req, res) => {
+app.post('/create-todos', (req, res) => {
 	const { todo } = req.body
+	console.log(req.body)
 	const item = {
 		id: new Date().getTime(),
 		name: todo,
 		done: false
 	}
+
+	console.log(item)
 	todoItems.push(item)
-	
-	res.redirect('/')
+
+
+	res.json({
+        status: 'OK',
+        message:'Todo created successfully',
+        data: item
+    })
+
+    //res.redirect('/')
 })
 
-app.get('/change/:id', (req, res) => {
+app.put('/change-todos/:id', (req, res) => {
 	const id = req.params.id
 	todoItems.forEach(function(element) {
 		if (element.id == id) {
@@ -63,10 +54,16 @@ app.get('/change/:id', (req, res) => {
 		console.log(todoItems)
 	})
 
-	res.redirect('/')
+	res.json({
+        status: 'OK',
+        message:'Todo updated successfully',
+        id
+    })
+
+	//res.redirect('/')
 })
 
-app.get('/delete/:id', (req, res) => {
+app.delete('/delete/:id', (req, res) => {
 	for (let i = 0; i < todoItems.length; i++) {
 		if (todoItems[i].id == req.params.id) {
 			todoItems.splice(i, 1)
@@ -75,12 +72,17 @@ app.get('/delete/:id', (req, res) => {
 		}
 	}
 
-	res.redirect('/')
+	res.json({
+        status: 'OK',
+        message:'Todo deleted successfully',
+    })
+
+	//res.redirect('/')
 })
 
 console.log(`starting Web on port ${process.env.PORT}`)
 
-app.listen(process.env.PORT, () => console.log('Web is up'))
+app.listen(process.env.PORT, () => console.log('Web is up!!!!!!!!!!!!!'))
 
 process.on('SIGINT', () => {
 	console.log('\nstopping Web...')
