@@ -1,5 +1,7 @@
+import axios from 'axios'
+
 const todoApi = {
-	baseUrl: 'http://localhost:3001/',
+	baseUrl: 'http://localhost:3001',
 
 	listTodos: function() {
 		return axios.get(this.baseUrl + '/list-todos')
@@ -8,8 +10,8 @@ const todoApi = {
 		})
 	},
 
-	createTodos: function(todo, state) {
-		return axios.post(this.baseUrl + '/create-todos')
+	createTodos: function(todo) {
+		return axios.post(this.baseUrl + '/create-todos', { todo })
 		.then(function({data}){
 			return data.data
 		})

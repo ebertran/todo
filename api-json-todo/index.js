@@ -1,11 +1,12 @@
 require('dotenv').config()
 
 const express = require('express')
-
+const cors = require('cors')
 const app = express()
 
 const bodyParser = require('body-parser')
 
+app.use(cors())
 app.use(bodyParser.json())
 
 //const todoService = new(require('./services/TodoService'))
@@ -24,6 +25,7 @@ app.get('/list-todos', (req, res) => {
 
 app.post('/create-todos', (req, res) => {
 	const { todo, state } = req.body
+	console.log(req.body)
 	const item = {
 		id: new Date().getTime(),
 		name: todo,
