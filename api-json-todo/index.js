@@ -12,29 +12,25 @@ app.use(bodyParser.json())
 
 const router = express.Router()
 
-const todoItems = []
+let todoItems = []
 
 app.get('/list-todos', (req, res) => {
-   const list = todoItems.map(item => ({ id: item.id, name: item.name, done: item.done }))
 
    res.json({
         status: 'OK',
-        data: list
+        data: todoItems
     })
 })
 
 app.post('/create-todos', (req, res) => {
-	const { todo } = req.body
-	console.log(req.body)
+	const { todo, state } = req.body
 	const item = {
 		id: new Date().getTime(),
 		name: todo,
-		done: false
+		done: state || false
 	}
 
-	console.log(item)
 	todoItems.push(item)
-
 
 	res.json({
         status: 'OK',
@@ -47,12 +43,19 @@ app.post('/create-todos', (req, res) => {
 
 app.put('/change-todos/:id', (req, res) => {
 	const id = req.params.id
-	todoItems.forEach(function(element) {
+	const { todo, done } = req.body
+
+	todoItems = todoItems.map(function(element) {
 		if (element.id == id) {
-			element.done = true
+			console.log('entra')
+			element.name = todo
+			element.done = done
 		}
-		console.log(todoItems)
+
+		return element
 	})
+	
+	console.log(todoItems)
 
 	res.json({
         status: 'OK',
