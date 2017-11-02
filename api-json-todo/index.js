@@ -49,7 +49,7 @@ app.put('/change-todos/:id', (req, res) => {
 		if (element.id == id) {
 			console.log('entra')
 			element.name = todo
-			element.done = done
+			element.done = done || true
 		}
 
 		return element
