@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import todoApi from './todoAPI'
+import List from './List'
 
 class Create extends Component {
 	constructor () {
@@ -32,6 +33,7 @@ class Create extends Component {
             <div className="todo-footer">
             </div>
         </div>
+        <List />
     }
 }
 

@@ -5,6 +5,15 @@ import Create from './components/Create.jsx'
 
 class App extends Component {
 
+	constructor () {
+		super()
+		this.state = {
+			todos: [],
+			value: '',
+			done: undefined
+		}
+	}
+
 	render() {
 		return ( 
 			<div className = "App">
